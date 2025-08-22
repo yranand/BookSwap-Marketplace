@@ -172,10 +172,12 @@ Create a new book listing.
 title: "Clean Code"
 author: "Robert C. Martin"
 condition: "good"
-image: [optional file upload]
+image: [optional file upload - field name must be "image"]
 ```
 
 **Book Conditions:** `new`, `like_new`, `good`, `fair`, `poor`
+
+**Important:** The `image` field must be a file upload, not a URL string. Use `multipart/form-data` with the field name `image`.
 
 **Response:**
 
@@ -306,6 +308,30 @@ Update request status (book owner only).
 1. Import `postman/BookSwap.postman_collection.json`
 2. Import `postman/BookSwap.postman_environment.json`
 3. Select "BookSwap" environment
+
+### File Upload Testing
+
+When testing book creation with images:
+
+1. **Use `form-data` body type** (not `raw` JSON)
+2. **Field name must be exactly `image`** (not `imageUrl` or any other name)
+3. **Set the `image` field type to `File`** in Postman
+4. **Select an actual image file** from your computer
+
+**Example Postman Setup:**
+
+- Body Type: `form-data`
+- Fields:
+  - `title`: `Clean Code` (Text)
+  - `author`: `Robert C. Martin` (Text)
+  - `condition`: `good` (Text)
+  - `image`: [Select File] (File)
+
+**Common Mistakes:**
+
+- ❌ Using field name `imageUrl` instead of `image`
+- ❌ Using `raw` JSON body instead of `form-data`
+- ❌ Setting image field type to `Text` instead of `File`
 
 ### Test Flow
 
@@ -538,8 +564,12 @@ This project is licensed under the MIT License.
 **File Upload Issues**
 
 - Ensure `uploads/` directory exists
-- Check file size limits
-- Verify file type restrictions
+- Check file size limits (max 5MB)
+- Verify file type restrictions (images only)
+- **Common Error:** `"Unexpected field"` - Field name must be exactly `image`, not `imageUrl`
+- **Common Error:** `"body.imageUrl" is not allowed` - Use file upload with field name `image`, not `imageUrl` text field
+- **Postman Setup:** Use `form-data` body type with `image` field set to `File` type
+- **Field Name:** Must be exactly `image` (case sensitive)
 
 **Validation Errors**
 

@@ -80,7 +80,8 @@
               "formdata": [
                 { "key": "title", "value": "Clean Code", "type": "text" },
                 { "key": "author", "value": "Robert C. Martin", "type": "text" },
-                { "key": "condition", "value": "good", "type": "text" }
+                { "key": "condition", "value": "good", "type": "text" },
+                { "key": "image", "type": "file", "src": [] }
               ]
             }
           },
